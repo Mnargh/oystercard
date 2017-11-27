@@ -4,10 +4,11 @@ class Oystercard
 
   def initialize
     @balance = 0
+    @max_limit = 90
   end
 
   def top_up(money)
+    raise("The maximum balance has been reached") if @balance + money > @max_limit
     @balance += money
   end
-
 end
