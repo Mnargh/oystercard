@@ -19,5 +19,15 @@ describe Oystercard do
     expect{subject.deduct(1)}.to change{subject.balance}.by -1
   end
 
+  it "in journey defaults to false" do
+    expect(subject.in_journey).to be(false)
+  end
 
+ it "touch in changes journey to true" do
+   expect(subject.touch_in).to be(true)
+ end
+
+it "touch out change journey to false" do
+  expect(subject.touch_out).to be(false)
+end
 end
