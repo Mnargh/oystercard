@@ -17,7 +17,7 @@ class Oystercard
   end
 
   def touch_in
-    raise("Card balance is below the minimum required for a single journey (#{Oystercard::MIN_FOR_JOURNEY})") if @balance < MIN_FOR_JOURNEY
+    raise("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})") if @balance < MIN_FOR_JOURNEY
     @in_journey = true
   end
 

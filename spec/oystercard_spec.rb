@@ -36,7 +36,7 @@ describe Oystercard do
   it "touch in below minimum balance returns error" do
     oc = Oystercard.new
     oc.top_up(0.99)
-    expect{ oc.touch_in }.to raise_error("Card balance is below the minimum required for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
+    expect{ oc.touch_in }.to raise_error("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
   end
 
 end
