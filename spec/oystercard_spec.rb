@@ -1,7 +1,8 @@
 require 'oystercard'
 
 describe Oystercard do
-  let(:station) {double(:station)}
+  let(:entry_station) {double(:entry_station)}
+  let(:exit_station) {double(:exit_station)}
 
   it "check default balance" do
     expect(subject.balance).to eq(0)
@@ -26,29 +27,42 @@ describe Oystercard do
   it "touch in changes in_journey to true" do
     oc = Oystercard.new
     oc.top_up(1)
-    oc.touch_in(station)
+    oc.touch_in(entry_station)
     expect(oc.in_journey?).to be(true)
   end
 
   it "touch out changes in_journey to false" do
     oc = Oystercard.new
     oc.top_up(1)
-    oc.touch_in(station)
-    oc.touch_out
+    oc.touch_in(entry_station)
+    oc.touch_out(exit_station)
     expect(oc.in_journey?).to be(false)
   end
 
   it "touch in below minimum balance returns error" do
     oc = Oystercard.new
     oc.top_up(0.99)
-    expect{ oc.touch_in(station) }.to raise_error("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
+    expect{ oc.touch_in(entry_station) }.to raise_error("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
   end
 
   it "should decrease by minimum value when touching out" do
     oc = Oystercard.new
     oc.top_up(5.0)
-    oc.touch_in(station)
-    expect{ oc.touch_out }.to change{ oc.balance }.by (-(Oystercard::MIN_FOR_JOURNEY))
+    oc.touch_in(entry_station)
+    expect{ oc.touch_out(exit_station) }.to change{ oc.balance }.by (-(Oystercard::MIN_FOR_JOURNEY))
   end
+
+  it "should have an empty array as default for the variable journeys" do
+    expect(Oystercard.new.journeys_list).to be_empty
+  end
+
+  it "should save a journey hash after touching out (after completing a journey)" do
+    oc = Oystercard.new
+    oc.top_up(5)
+    oc.touch_in(entry_station)
+    oc.touch_out(exit_station)
+    expect(oc.journeys_list).to eq([{entry_station => exit_station}])
+  end
+
 
 end
