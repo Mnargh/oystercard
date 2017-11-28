@@ -14,10 +14,10 @@ describe Oystercard do
     expect{ subject.top_up(1) }.to raise_error("The maximum balance of #{Oystercard::MAX} has been reached")
   end
 
-  it "deduct money" do
-    subject.top_up(20)
-    expect{subject.deduct(1)}.to change{subject.balance}.by -1
-  end
+  # it "deduct money" do
+  #   subject.top_up(20)
+  #   expect{subject.deduct(1)}.to change{subject.balance}.by -1
+  # end
 
   it "in journey defaults to false" do
     expect(subject.in_journey).to be(false)
