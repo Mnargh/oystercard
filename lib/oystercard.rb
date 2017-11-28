@@ -1,3 +1,4 @@
+require './lib/station.rb'
 class Oystercard
   attr_accessor :balance, :in_journey, :entry_station, :journeys_list
 
