@@ -1,3 +1,4 @@
 require './lib/oystercard.rb'
 
-p oystercard = Oystercard.new
+p oc = Oystercard.new
+p oc.touch_in

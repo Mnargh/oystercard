@@ -11,7 +11,7 @@ describe Oystercard do
 
   it "enforce max balance" do
     90.times{subject.top_up(1)}
-    expect{ subject.top_up(1) }.to raise_error("The maximum balance has been reached")
+    expect{ subject.top_up(1) }.to raise_error("The maximum balance of #{Oystercard::MAX} has been reached")
   end
 
   it "deduct money" do
@@ -23,11 +23,20 @@ describe Oystercard do
     expect(subject.in_journey).to be(false)
   end
 
- it "touch in changes journey to true" do
-   expect(subject.touch_in).to be(true)
- end
+  it "touch in changes journey to true" do
+    oc = Oystercard.new
+    oc.top_up(1)
+    expect(oc.touch_in).to be(true)
+  end
 
-it "touch out change journey to false" do
-  expect(subject.touch_out).to be(false)
-end
+  it "touch out change journey to false" do
+    expect(subject.touch_out).to be(false)
+  end
+
+  it "touch in below minimum balance returns error" do
+    oc = Oystercard.new
+    oc.top_up(0.99)
+    expect{ oc.touch_in }.to raise_error("Card balance is below the minimum required for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
+  end
+
 end
