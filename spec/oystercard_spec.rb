@@ -39,4 +39,11 @@ describe Oystercard do
     expect{ oc.touch_in }.to raise_error("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
   end
 
+  it "should decrease by minimum value when touching out" do
+    oc = Oystercard.new
+    oc.top_up(5.0)
+    oc.touch_in
+    expect{ oc.touch_out }.to change{ oc.balance }.by (-(Oystercard::MIN_FOR_JOURNEY))
+  end
+
 end
