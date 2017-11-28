@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
   let(:entry_station) {double(:entry_station)}
   let(:exit_station) {double(:exit_station)}
+  # let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
 
   it "check default balance" do
     expect(subject.balance).to eq(0)
@@ -63,6 +64,14 @@ describe Oystercard do
     oc.touch_out(exit_station)
     expect(oc.journeys_list).to eq([{entry_station => exit_station}])
   end
+
+  # it "should save a journey hash after touching out (after completing a journey)" do
+  #   oc = Oystercard.new
+  #   oc.top_up(5)
+  #   oc.touch_in(entry_station)
+  #   oc.touch_out(exit_station)
+  #   expect(oc.journeys_list).to include journey
+  # end
 
 
 end
