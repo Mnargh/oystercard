@@ -3,7 +3,7 @@ require 'oystercard'
 describe Oystercard do
   let(:entry_station) {double(:entry_station)}
   let(:exit_station) {double(:exit_station)}
-  # let(:journey) { {entry_station: entry_station, exit_station: exit_station} }
+  let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
 
   context "card balance" do
     it "check default balance" do
@@ -35,6 +35,12 @@ describe Oystercard do
       oc.top_up(0.99)
       expect{ oc.touch_in(entry_station) }.to raise_error("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})")
     end
+
+    # it "Starts a new journey when you touch in" do
+    #   s1 = double(:station, name: "Euston", zone: 1)
+    #   # oystercard.touch_in(s1)
+    #   expect(subject.start).to eq({entry_station: "Euston", exit_station: nil})
+    # end
   end
 
   context "Touch_out" do
@@ -58,7 +64,7 @@ describe Oystercard do
       oc.top_up(5)
       oc.touch_in(entry_station)
       oc.touch_out(exit_station)
-      expect(oc.journeys_list).to eq([{entry_station => exit_station}])
+      expect(oc.journeys_list).to include(journey)
     end
   end
 
