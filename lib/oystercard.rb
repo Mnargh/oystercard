@@ -11,12 +11,12 @@ class Oystercard
   end
 
   def top_up(money)
-    raise("The maximum balance of #{Oystercard::MAX} has been reached") if @balance + money > MAX
+    raise("The maximum balance of #{Oystercard::MAX} has been reached") if balance_full?
     @balance += money
   end
 
   def touch_in(entry_station)
-    raise("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})") if @balance < MIN_FOR_JOURNEY
+    raise("Insufficient balance for a single journey (#{Oystercard::MIN_FOR_JOURNEY})") if insufficient_funds?
     # @j = Journey.new
     # @j.
     @entry_station = entry_station
@@ -30,11 +30,19 @@ class Oystercard
   end
 
   def in_journey?
-    !! @entry_station
+    !!@entry_station
   end
 
   private
   def deduct(money)
     @balance -= money
+  end
+
+  def insufficient_funds?
+    @balance < MIN_FOR_JOURNEY
+  end
+
+  def balance_full?(amount)
+    @balance + money > MAX
   end
 end

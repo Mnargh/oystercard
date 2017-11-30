@@ -15,7 +15,7 @@ describe Journey do
     expect(new_journey.exit_station).to eq nil
   end
 
-  it 'starts a journey' do
+  it 'starts a journey by passing single argument to Journey' do
     new_journey = Journey.new("Euston")
     expect(new_journey.entry_station).to eq ("Euston")
   end
