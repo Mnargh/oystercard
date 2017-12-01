@@ -23,12 +23,12 @@ describe Oystercard do
   context "Touch_in" do
     it { is_expected.to respond_to(:touch_in).with(1).argument }
 
-    it "touch in changes in_journey to true" do
-      oc = Oystercard.new
-      oc.top_up(1)
-      oc.touch_in(entry_station)
-      expect(oc.in_journey?).to be(true)
-    end
+    # it "touch in changes in_journey to true" do
+    #   oc = Oystercard.new
+    #   oc.top_up(1)
+    #   oc.touch_in(entry_station)
+    #   expect(oc.in_journey?).to be(true)
+    # end
 
     it "touch in below minimum balance returns error" do
       oc = Oystercard.new
@@ -44,13 +44,13 @@ describe Oystercard do
   end
 
   context "Touch_out" do
-    it "touch out changes in_journey to false" do
-      oc = Oystercard.new
-      oc.top_up(1)
-      oc.touch_in(entry_station)
-      oc.touch_out(exit_station)
-      expect(oc.in_journey?).to be(false)
-    end
+    # it "touch out changes in_journey to false" do
+    #   oc = Oystercard.new
+    #   oc.top_up(1)
+    #   oc.touch_in(entry_station)
+    #   oc.touch_out(exit_station)
+    #   expect(oc.in_journey?).to be(false)
+    # end
 
     it "should decrease by minimum value when touching out" do
       oc = Oystercard.new
@@ -59,24 +59,24 @@ describe Oystercard do
       expect{ oc.touch_out(exit_station) }.to change{ oc.balance }.by (-(Oystercard::MIN_FOR_JOURNEY))
     end
 
-    it "should save a journey hash after touching out (after completing a journey)" do
-      oc = Oystercard.new
-      oc.top_up(5)
-      oc.touch_in(entry_station)
-      oc.touch_out(exit_station)
-      expect(oc.journeys_list).to include(journey)
-    end
+    # it "should save a journey hash after touching out (after completing a journey)" do
+    #   oc = Oystercard.new
+    #   oc.top_up(5)
+    #   oc.touch_in(entry_station)
+    #   oc.touch_out(exit_station)
+    #   expect(oc.journeys_list).to include(journey)
+    # end
   end
 
   context "journey" do
-    it "should have an empty array as default for the variable journeys" do
-      expect(Oystercard.new.journeys_list).to be_empty
-    end
+    # it "should have an empty array as default for the variable journeys" do
+    #   expect(Oystercard.new.journeys_list).to be_empty
+    # end
 
-    it "in journey defaults to false" do
-      #expect(subject.in_journey?).to be(false)
-      expect(Oystercard.new).to_not be_in_journey
-    end
+    # it "in journey defaults to false" do
+    #   #expect(subject.in_journey?).to be(false)
+    #   expect(Oystercard.new).to_not be_in_journey
+    # end
   end
 
   # it "should save a journey hash after touching out (after completing a journey)" do
